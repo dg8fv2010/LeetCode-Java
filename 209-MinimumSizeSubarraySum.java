@@ -51,6 +51,7 @@ public class MinimumSizeSubarraySum {
         return rst;
     }
 
+    // 二分查找
     public int minSubArrayLen2(int s, int[] nums) {
         int rst = nums.length + 1;
         int[] prefixSum = new int[nums.length + 1];
