@@ -29,6 +29,7 @@ public class MovingAveragefromDataStream {
     public int next(int val) {
         if (this.size == this.q.size()) {
             this.sum -= this.q.poll();
+            this.size--;
         }
         this.q.add(val);
         this.sum += val;
