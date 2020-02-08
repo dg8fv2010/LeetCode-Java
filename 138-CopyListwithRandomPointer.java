@@ -112,7 +112,7 @@ public class CopyListwithRandomPointer {
             if (t.next != null) {
                 t.next = t.next.next;
             }
-            cur = t.next;
+            cur = cur.next;
         }
         return rst;
     }
