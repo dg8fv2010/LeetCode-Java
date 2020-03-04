@@ -21,7 +21,7 @@ Output: ["h","a","n","n","a","H"]
  */
 
 public class ReverseString {
-    public void reverseString(char[] s) {
+    public void reverseString1(char[] s) {
         if (s == null || s.length == 0) {
             return;
         }
@@ -35,6 +35,20 @@ public class ReverseString {
             r--;
         }
     }
+
+    public void reverseString(char[] s) {
+        if (s == null || s.length == 0) return;
+        helper(s, 0, s.length - 1);
+    }
+
+    public void helper(char[] s, int l, int r) {
+        if (l > r) return;
+        char tmp = s[l];
+        s[l] = s[r];
+        s[r] = tmp;
+        helper(s, l + 1, r - 1);
+    }
+
 
     public static void main(String[] args) {
         char[] a = new char[]{'h', 'e', 'l', 'l', 'o'};
