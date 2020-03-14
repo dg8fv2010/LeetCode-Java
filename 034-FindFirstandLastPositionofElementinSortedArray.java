@@ -41,7 +41,7 @@ public class FindFirstandLastPositionofElementinSortedArray {
     }
 
     public static void testcase1() {
-        SearchforaRange solu = new SearchforaRange();
+        FindFirstandLastPositionofElementinSortedArray solu = new FindFirstandLastPositionofElementinSortedArray();
         System.out.println(solu.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8));
     }
 }
