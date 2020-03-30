@@ -17,42 +17,42 @@ import java.util.HashMap;
 
 public class MinimumWindowSubstring {
     public String minWindow(String s, String t) {
-        String rst = "";
-        int minLen = Integer.MAX_VALUE;
-        HashMap<Character, Integer> map = new HashMap<>();
+        HashMap<Character, Integer> window = new HashMap<>();
+        HashMap<Character, Integer> need = new HashMap<>();
         for (char c : t.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
+            need.put(c, need.getOrDefault(c, 0) + 1);
         }
 
+        int left = 0;
+        int right = 0;
+        int start = 0;
+        int minLen = Integer.MAX_VALUE;
         int cnt = 0;
-        int begin = 0;
-        int end = 0;
-        while (end < s.length()) {
-            char c = s.charAt(end);
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) - 1);
-                if (map.get(c) >= 0) {
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if ((int) window.get(c) == need.get(c)) {
                     cnt++;
                 }
             }
-            while (cnt == t.length()) {
-                if (minLen > end - begin + 1) {
-                    minLen = end - begin + 1;
-                    rst = s.substring(begin, end + 1);
+            right++;
+            while (cnt == need.size()) {
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    start = left;
                 }
-
-                char cc = s.charAt(begin);
-                if (map.containsKey(cc)) {
-                    map.put(cc, map.get(cc) + 1);
-                    if (map.get(cc) > 0) {
+                char c2 = s.charAt(left);
+                if (need.containsKey(c2)) {
+                    window.put(c2, window.getOrDefault(c2, 0) - 1);
+                    if (window.get(c2) < need.get(c2)) {
                         cnt--;
                     }
                 }
-                begin++;
+                left++;
             }
-            end++;
         }
-        return rst;
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
     }
 
     public static void main(String[] args) {
