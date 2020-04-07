@@ -19,10 +19,24 @@ You may assume that you have an infinite number of each kind of coin.
 import java.util.Arrays;
 
 public class CoinChange {
+    public int coinChange(int[] coins, int amount) {
+        int[] rst = new int[amount + 1];
+        rst[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            rst[i] = Integer.MAX_VALUE;
+            for (int coin : coins) {
+                if (i >= coin && rst[i - coin] != Integer.MAX_VALUE && rst[i - coin] + 1 < rst[i]) {
+                    rst[i] = rst[i - coin] + 1;
+                }
+            }
+        }
+        return rst[amount] == Integer.MAX_VALUE ? -1 : rst[amount];
+    }
+
     int rst = 0;
 
     // https://www.cnblogs.com/grandyang/p/5138186.html
-    public int coinChange(int[] coins, int amount) {
+    public int coinChange2(int[] coins, int amount) {
         Arrays.sort(coins);
         this.rst = Integer.MAX_VALUE;
         helper(coins, coins.length - 1, amount, 0);
@@ -84,7 +98,7 @@ public class CoinChange {
     public static void testcase1() {
         CoinChange solu = new CoinChange();
         System.out.println(solu.coinChange(new int[]{1, 2, 5}, 11));
-        System.out.println(solu.coinChange(new int[]{2}, 3));
+        System.out.println(solu.coinChange(new int[]{1}, 0));
         System.out.println(solu.coinChange(new int[]{1, 2147483647}, 2));
         System.out.println(solu.coinChange(new int[]{186, 419, 83, 408}, 6249));
     }
