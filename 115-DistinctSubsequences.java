@@ -46,24 +46,27 @@ import java.util.TreeSet;
 
 public class DistinctSubsequences {
     public int numDistinct(String s, String t) {
-        int tLen = t.length();
-        int sLen = s.length();
-        int[][] dp = new int[tLen + 1][sLen + 1];
-        for (int j = 0; j < sLen; j++) {
-            dp[0][j] = 1;
-        }
-        char[] sArr = s.toCharArray();
-        char[] tArr = t.toCharArray();
-        for (int i = 1; i < tLen + 1; i++) {
-            for (int j = 1; j < sLen + 1; j++) {
-                if (tArr[i - 1] == sArr[j - 1]) {
-                    dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1];
-                } else {
-                    dp[i][j] = dp[i][j - 1];
+        int m = s.length();
+        int n = t.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (j == 0) {
+                    // very imortant
+                    dp[i][j] = 1;
+                    continue;
+                }
+                if (i == 0) {
+                    dp[i][j] = 0;
+                    continue;
+                }
+                dp[i][j] = dp[i - 1][j];
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[i][j] += dp[i - 1][j - 1];
                 }
             }
         }
-        return dp[tLen][sLen];
+        return dp[m][n];
     }
 
     int cnt = 0;
@@ -109,7 +112,7 @@ public class DistinctSubsequences {
 
     public static void testcase1() {
         DistinctSubsequences solu = new DistinctSubsequences();
-        //System.out.println(solu.numDistinct("rabbbit", "rabbit"));
+        System.out.println(solu.numDistinct("rabbbit", "rabbit"));
         System.out.println(solu.numDistinct("babgbag", "bag"));
     }
 
