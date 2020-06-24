@@ -22,17 +22,14 @@ Explanation: You will always arrive at index 3 no matter what. Its maximum
 
 public class JumpGame {
     public boolean canJump(int[] nums) {
-        boolean[] dp = new boolean[nums.length];
-        dp[0] = true;
-
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (dp[j] && nums[j] + j >= i) {
-                    dp[i] = true;
-                    break;
-                }
+            dp[i] = Math.max(dp[i - 1], nums[i - 1]) - 1;
+            if (dp[i] < 0) {
+                return false;
             }
         }
-        return dp[nums.length - 1];
+        return true;
     }
 }
